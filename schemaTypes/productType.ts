@@ -63,6 +63,22 @@ export const productType = defineType({
       description: 'Original price for sale items',
     }),
     defineField({
+      name: 'stripeProductId',
+      title: 'Stripe Product ID',
+      type: 'string',
+      description: 'Auto-generated Stripe product ID',
+      readOnly: true,
+      hidden: ({ document }) => !document?.stripeProductId,
+    }),
+    defineField({
+      name: 'stripePriceId',
+      title: 'Stripe Price ID',
+      type: 'string',
+      description: 'Auto-generated Stripe price ID',
+      readOnly: true,
+      hidden: ({ document }) => !document?.stripePriceId,
+    }),
+    defineField({
       name: 'inStock',
       title: 'In Stock',
       type: 'boolean',

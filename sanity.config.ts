@@ -2,6 +2,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
+import {syncToStripe} from './actions/syncToStripe'
 
 export default defineConfig({
   name: 'default',
@@ -14,6 +15,16 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (prev, context) => {
+      // Добавляем действие синхронизации для продуктов
+      if (context.schemaType === 'product') {
+        return [...prev, syncToStripe]
+      }
+      return prev
+    },
   },
 
   // CORS настройки для разрешения запросов с localhost
