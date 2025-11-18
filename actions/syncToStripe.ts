@@ -14,7 +14,7 @@ export const syncToStripe: DocumentActionComponent = (props) => {
     onHandle: async () => {
       try {
         // Используем URL вашего API endpoint
-        const apiUrl = process.env.SANITY_STUDIO_API_URL || 'http://localhost:3000';
+        const apiUrl = process.env.SANITY_STUDIO_API_URL || 'https://www.rodasoleil.bg/ru';
 
         const response = await fetch(`${apiUrl}/api/sync-stripe`, {
           method: 'POST',
