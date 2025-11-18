@@ -27,8 +27,13 @@ export default defineConfig({
     },
   },
 
-  // CORS настройки для разрешения запросов с localhost
+  // CORS настройки для разрешения запросов с production и localhost
   cors: {
-    allowOrigins: ['http://localhost:3000', 'http://localhost:3333'],
+    allowOrigins: [
+      'http://localhost:3000',
+      'http://localhost:3333',
+      'https://rodasoleil.bg',
+      'https://www.rodasoleil.bg'
+    ],
   },
 })

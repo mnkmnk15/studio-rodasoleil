@@ -1,9 +1,68 @@
-# Sanity Clean Content Studio
+# RoDaSoleil - Sanity Studio
 
-Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.
+Headless CMS для управления контентом интернет-магазина RoDaSoleil.
 
-Now you can do the following things:
+**Project ID:** 7bepndor
+**Dataset:** production
+**Website:** https://www.rodasoleil.bg
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the Sanity community](https://www.sanity.io/community/join?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+## Технологии
+
+- **Sanity Studio** - CMS интерфейс
+- **TypeScript** - Типизация
+- **Sanity Vision** - GROQ Query Explorer
+
+## Схемы данных
+
+### Product (Товар)
+- Название, описание, цена
+- Изображения (множественные)
+- Категории и фильтры (gender, productType)
+- Интеграция со Stripe (productId, priceId)
+- Размеры и наличие
+
+### Category (Категория)
+- Название и описание
+- Тип категории
+- Порядок сортировки
+
+### Banner (Баннер)
+- Изображения для главной страницы
+- Текст и ссылки
+
+## Установка
+
+```bash
+npm install
+```
+
+## Запуск
+
+```bash
+# Development
+npm run dev
+
+# Production build
+npm run build
+```
+
+## Деплой
+
+Sanity Studio автоматически деплоится на `https://rodasoleil.sanity.studio` при пуше в репозиторий.
+
+## Интеграция
+
+Studio интегрирован с:
+- Next.js магазином (rodasoleil-shop)
+- Stripe для управления товарами
+- Production dataset для реальных данных
+
+## Контакты
+
+- Website: [https://www.rodasoleil.bg](https://www.rodasoleil.bg)
+- Sanity Project: [https://www.sanity.io/manage](https://www.sanity.io/manage)
+
+---
+
+**Версия:** 1.0.0
+**Обновлено:** Ноябрь 2024

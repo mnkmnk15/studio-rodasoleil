@@ -13,8 +13,8 @@ export const syncToStripe: DocumentActionComponent = (props) => {
     icon: () => '🔄',
     onHandle: async () => {
       try {
-        // Используем URL вашего API endpoint
-        const apiUrl = process.env.SANITY_STUDIO_API_URL || 'http://localhost:3000';
+        // Используем URL вашего API endpoint - убедитесь что Next.js dev server запущен на этом порту
+        const apiUrl = 'https://www.rodasoleil.bg/';
 
         const response = await fetch(`${apiUrl}/api/sync-stripe`, {
           method: 'POST',
