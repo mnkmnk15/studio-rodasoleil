@@ -3,6 +3,7 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {syncToStripe} from './actions/syncToStripe'
+import {ruKZLocale} from '@sanity/locale-ru-kz'
 
 export default defineConfig({
   name: 'default',
@@ -11,7 +12,7 @@ export default defineConfig({
   projectId: '7bepndor',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool(), visionTool(), ruKZLocale()],
 
   schema: {
     types: schemaTypes,
