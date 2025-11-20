@@ -27,14 +27,53 @@ export const productType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
+      name: 'shortDescription',
+      title: 'Short Description',
       type: 'object',
+      description: 'Brief description for product cards (1-2 sentences, max 150 characters)',
+      fields: [
+        {
+          name: 'bg',
+          title: 'Bulgarian',
+          type: 'string',
+          validation: (Rule) => Rule.max(150).warning('Keep it under 150 characters for best display')
+        },
+        {
+          name: 'ru',
+          title: 'Russian',
+          type: 'string',
+          validation: (Rule) => Rule.max(150).warning('Keep it under 150 characters for best display')
+        },
+        {
+          name: 'en',
+          title: 'English',
+          type: 'string',
+          validation: (Rule) => Rule.max(150).warning('Keep it under 150 characters for best display')
+        },
+      ],
+    }),
+    defineField({
+      name: 'fullDescription',
+      title: 'Full Description',
+      type: 'object',
+      description: 'Detailed description for product page',
       fields: [
         { name: 'bg', title: 'Bulgarian', type: 'text' },
         { name: 'ru', title: 'Russian', type: 'text' },
         { name: 'en', title: 'English', type: 'text' },
       ],
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description (Legacy)',
+      type: 'object',
+      description: 'Legacy field - use Short Description and Full Description instead',
+      fields: [
+        { name: 'bg', title: 'Bulgarian', type: 'text' },
+        { name: 'ru', title: 'Russian', type: 'text' },
+        { name: 'en', title: 'English', type: 'text' },
+      ],
+      hidden: true,
     }),
     defineField({
       name: 'images',
