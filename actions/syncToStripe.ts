@@ -1,7 +1,6 @@
 import {DocumentActionComponent} from 'sanity'
 
-// ВАЖНО: Этот токен должен совпадать с SANITY_API_TOKEN в rodasoleil-shop/.env
-// Используется для авторизации запросов к API синхронизации
+// API URL для синхронизации товаров со Stripe
 const SYNC_API_URL = 'https://www.rodasoleil.bg/api/sync-stripe'
 
 export const syncToStripe: DocumentActionComponent = (props) => {
@@ -19,20 +18,10 @@ export const syncToStripe: DocumentActionComponent = (props) => {
       try {
         const productId = draft?._id || published?._id || id
 
-        // Получаем токен из переменных окружения Sanity Studio
-        // Настройте SANITY_STUDIO_SYNC_SECRET в настройках Sanity
-        const syncSecret = process.env.SANITY_STUDIO_SYNC_SECRET || ''
-
-        if (!syncSecret) {
-          console.warn('SANITY_STUDIO_SYNC_SECRET not configured, trying without auth...')
-        }
-
         const response = await fetch(SYNC_API_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            // Отправляем токен для авторизации
-            ...(syncSecret && {'x-sync-secret': syncSecret}),
           },
           body: JSON.stringify({
             productId: productId,
