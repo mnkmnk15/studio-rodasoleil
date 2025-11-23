@@ -197,7 +197,7 @@ export const productType = defineType({
     }),
     defineField({
       name: 'kidsSizes',
-      title: 'Available Sizes (Kids)',
+      title: 'Available Sizes (Kids) - Legacy',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
@@ -213,8 +213,68 @@ export const productType = defineType({
           { title: '152 см', value: '152' },
         ],
       },
+      hidden: true, // Скрыто - используйте kidsSizePrices вместо этого
+      description: 'Legacy field - use kidsSizePrices instead',
+    }),
+    defineField({
+      name: 'kidsSizePrices',
+      title: 'Kids Sizes with Prices',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'kidsSizePrice',
+          title: 'Size Price',
+          fields: [
+            {
+              name: 'size',
+              title: 'Size (Height in cm)',
+              type: 'string',
+              options: {
+                list: [
+                  { title: '104 см', value: '104' },
+                  { title: '110 см', value: '110' },
+                  { title: '116 см', value: '116' },
+                  { title: '122 см', value: '122' },
+                  { title: '128 см', value: '128' },
+                  { title: '134 см', value: '134' },
+                  { title: '140 см', value: '140' },
+                  { title: '146 см', value: '146' },
+                  { title: '152 см', value: '152' },
+                ],
+              },
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'price',
+              title: 'Price (EUR)',
+              type: 'number',
+              validation: (Rule) => Rule.required().min(0),
+            },
+            {
+              name: 'stripePriceId',
+              title: 'Stripe Price ID',
+              type: 'string',
+              description: 'Auto-generated Stripe price ID for this size',
+              readOnly: true,
+            },
+          ],
+          preview: {
+            select: {
+              size: 'size',
+              price: 'price',
+            },
+            prepare({ size, price }) {
+              return {
+                title: `${size} см`,
+                subtitle: price ? `€${price}` : 'No price set',
+              };
+            },
+          },
+        },
+      ],
       hidden: ({ document }) => document?.gender !== 'kids',
-      description: 'Height-based sizes for kids products (in cm)',
+      description: 'Height-based sizes for kids products with individual prices (in cm)',
     }),
     defineField({
       name: 'colors',
@@ -253,12 +313,25 @@ export const productType = defineType({
       price: 'price',
       gender: 'gender',
       productType: 'productType',
+      kidsSizePrices: 'kidsSizePrices',
     },
     prepare(selection) {
-      const { title, media, price, gender, productType } = selection;
+      const { title, media, price, gender, productType, kidsSizePrices } = selection;
+      let priceDisplay = `€${price}`;
+
+      // Для детских товаров показываем диапазон цен
+      if (gender === 'kids' && kidsSizePrices && kidsSizePrices.length > 0) {
+        const prices = kidsSizePrices.map((sp: { price: number }) => sp.price).filter(Boolean);
+        if (prices.length > 0) {
+          const minPrice = Math.min(...prices);
+          const maxPrice = Math.max(...prices);
+          priceDisplay = minPrice === maxPrice ? `€${minPrice}` : `€${minPrice}-€${maxPrice}`;
+        }
+      }
+
       return {
         title,
-        subtitle: `€${price} · ${gender} · ${productType}`,
+        subtitle: `${priceDisplay} · ${gender} · ${productType}`,
         media,
       };
     },
